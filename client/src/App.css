@@ -1,0 +1,8 @@
+/* Component-specific styles for App.jsx can go here */
+@import "tailwindcss";
+/* Example:
+.app-container {
+  text-align: center;
+  padding: 2rem;
+}
+*/
