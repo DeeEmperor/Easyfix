@@ -3,16 +3,16 @@ import { Link } from "react-router-dom";
 
 
 function Login({ formData, handleChange, handleLogin }) {
-    const [activeAudience , setActiveAudience] = useState("user")
+    const [activeAudience , setActiveAudience] = useState("customer")
     return (
         <div className="min-h-screen  flex flex-col items-center bg-black pt-20 justify-center">
             <div className="flex w-full max-w-md bg-gray-800 rounded-xl overflow-hidden mb-6">
                 <button
-          onClick={() => setActiveAudience("user")}
+          onClick={() => setActiveAudience("customer")}
           className={`w-1/2 py-2 font-bold transition-colors  ${
-            activeAudience === "user" ? "bg-amber-500 text-black" : "bg-gray-700 text-white"
+            activeAudience === "customer" ? "bg-amber-500 text-black" : "bg-gray-700 text-white"
           }`}
-                >User</button>
+                >Customer</button>
                 <button
           onClick={() => setActiveAudience("worker")}
           className={`w-1/2 py-2 font-bold transition-colors  ${
