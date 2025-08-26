@@ -4,6 +4,49 @@ import bcrypt from "bcryptjs";
 
 const router = express.Router();
 
+//login logic
+router.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    //check all the fields
+    if (!email || !password) {
+      return res
+        .status(400)
+        .json({ error: "Did you forget to fill all fields?" });
+    }
+    //check if email is in the database
+    const existingUser = await User.findOne({ email });
+    if (!existingUser) {
+      return res.status(400).json({
+        error: "Oops, it doesn't seem like you have  an account with us.",
+      });
+    }
+    //check if hasedpassword in db matches the hashed inputed password
+    const isPasswordValid = await existingUser.comparePassword(password);
+    if (!isPasswordValid) {
+      return res.status(400).json({ error: "Invalid password" });
+    }
+    
+    //if all is well, send success response to the client
+    const userResponse = {
+      _id: existingUser._id,
+      firstname: existingUser.firstname,
+      lastname: existingUser.lastname,
+      email: existingUser.email,
+      role: existingUser.role,
+    };
+
+    res.status(200).json({
+      message: "Login successful",
+      user: userResponse,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+//sgnup logic
 router.post("/signup", async (req, res) => {
   try {
     const { firstname, lastname, email, password } = req.body;
@@ -17,16 +60,12 @@ router.post("/signup", async (req, res) => {
     if (existingUser) {
       return res.status(400).json({ error: "User already exists" });
     }
-    //hash password before creating user
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-
-    //create new user
+    //create new user (password will be hashed by the pre-save middleware)
     const newUser = new User({
       firstname,
       lastname,
       email,
-      password: hashedPassword,
+      password: password,
       role: "customer",
     });
 
