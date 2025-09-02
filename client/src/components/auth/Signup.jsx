@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-function Signup({formData, handleChange, handleSignup}) {
+function Signup({formData, handleChange, handleSignup, loading}) {
     const [activeAudience, setActiveAudience] = useState("customer")
    
     return (
-       <div className="min-h-screen  flex flex-col items-center bg-black pt-20 justify-ce">
+       <div className="min-h-screen  flex flex-col items-center bg-black pt-20 justify-center">
                    <div className="flex w-full max-w-md bg-gray-800 rounded-xl overflow-hidden mb-6">
                        <button
                  onClick={() => setActiveAudience("customer")}
@@ -44,7 +44,13 @@ function Signup({formData, handleChange, handleSignup}) {
                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">Confirm Password</label>
                            <input onChange={handleChange} type="password" name="confirmPassword" id="confirmPassword" placeholder="Enter your password again" className="w-full px-4 py-2 rounded-lg bg-black border border-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500" value={formData.confirmPassword} required/>
                        </div>
-                       <button type="submit" className="w-full bg-amber-500 text-white font-semibold py-2 rounded-lg hover:bg-amber-600 transition-colors">Sign Up</button>
+                       <button 
+                           type="submit" 
+                           className="w-full bg-amber-500 text-white font-semibold py-2 rounded-lg hover:bg-amber-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                           disabled={loading}
+                       >
+                           {loading ? "Creating Account..." : "Sign Up"}
+                       </button>
                        
                        <p className="text-center mt-3 text-brown-300">Or</p>
                        <button className="w-full bg-amber-500 text-white font-semibold py-2 rounded-lg hover:bg-amber-600 transition-colors mb-4 flex items-center justify-center gap-2">

@@ -4,6 +4,8 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import router from "./routes/auth.js";
 
+import protect from "./middleware/protect.js";
+
 dotenv.config();
 
 const app = express();

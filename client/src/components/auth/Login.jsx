@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 
-function Login({ formData, handleChange, handleLogin }) {
+function Login({ formData, handleChange, handleLogin, loading }) {
     const [activeAudience , setActiveAudience] = useState("customer")
     return (
         <div className="min-h-screen  flex flex-col items-center bg-black pt-20 justify-center">
@@ -48,7 +48,13 @@ function Login({ formData, handleChange, handleLogin }) {
                         onChange={handleChange}
                     />
                 </div>
-                <button type="submit" className="w-full bg-amber-500 text-white font-semibold py-2 rounded-lg hover:bg-amber-600 transition-colors" onClick={handleLogin}>Login</button>
+                <button 
+                    type="submit" 
+                    className="w-full bg-amber-500 text-white font-semibold py-2 rounded-lg hover:bg-amber-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed" 
+                    disabled={loading}
+                >
+                    {loading ? "Logging in..." : "Login"}
+                </button>
                 
                 <p className="text-center mt-3 text-brown-300">Or</p>
                 <button className="w-full bg-amber-500 text-white font-semibold py-2 rounded-lg hover:bg-amber-600 transition-colors mb-4 flex items-center justify-center gap-2">
